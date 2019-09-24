@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+
+  # Web + FPM
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    links:
+      - mysql
+    volumes:
+      - .:/api
+    depends_on:
+      - mysql
+  # Dependencies
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: db_price_api
+volumes:
+  vendor: {}
